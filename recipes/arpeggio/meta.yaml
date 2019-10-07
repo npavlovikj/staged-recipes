@@ -1,0 +1,53 @@
+{% set name = "Arpeggio" %}
+{% set version = "1.9.2" %}
+{% set sha256 = "948ce06163a48a72c97f4fe79ad3d1c1330b6fec4f22ece182fb60ef60bd022b" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
+  sha256: "{{ sha256 }}"
+
+build:
+  number: 0
+  noarch: python
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - arpeggio
+    - arpeggio.tests
+    - arpeggio.tests.regressions
+    - arpeggio.tests.regressions.issue_16
+    - arpeggio.tests.regressions.issue_20
+    - arpeggio.tests.regressions.issue_22
+    - arpeggio.tests.regressions.issue_26
+    - arpeggio.tests.regressions.issue_31
+    - arpeggio.tests.regressions.issue_32
+    - arpeggio.tests.regressions.issue_43
+    - examples
+    - examples.calc
+    - examples.csv
+  requires:
+    - pytest
+
+about:
+  home: https://github.com/textX/Arpeggio
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  summary: "Arpeggio is a recursive descent parser with memoization based on PEG grammars (aka Packrat parser)."
+  doc_url: http://textx.github.io/Arpeggio/stable/
+
+extra:
+  recipe-maintainers:
+    - npavlovikj
